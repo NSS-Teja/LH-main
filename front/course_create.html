@@ -1,17 +1,20 @@
+<!-- #USE ONLY FOR TESTING PURPOSE -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Course - LearnHub</title>
     <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
     <div class="container">
         <h2>Create a New Course</h2>
         <form id="create-course-form" enctype="multipart/form-data">
             <input type="text" name="title" placeholder="Course Title" required>
-            <textarea name="description" placeholder="Course Description" required></textarea>
+            <input name="description" placeholder="Course Description" required></input>
             <input type="number" name="price" placeholder="Price" step="0.01" required>
             <input type="text" name="category" placeholder="Category" required>
             <input type="file" name="materials" multiple>
@@ -20,4 +23,5 @@
     </div>
     <script src="course.js"></script>
 </body>
+
 </html>

@@ -1,21 +1,51 @@
+<!-- #profile.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - LearnHub</title>
     <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
     <div class="container">
         <h2>User Profile</h2>
         <div id="profile-details">
             <p><strong>User ID:</strong> <span id="user-id"></span></p>
             <p><strong>Name:</strong> <span id="user-name"></span> <button onclick="editField('name')">Edit</button></p>
-            <p><strong>Email:</strong> <span id="user-email"></span> <button onclick="editField('email')">Edit</button></p>
+            <p><strong>Email:</strong> <span id="user-email"></span> <button onclick="editField('email')">Edit</button>
+            </p>
             <p><strong>Phone:</strong> <span id="user-phone"></span></p>
         </div>
     </div>
-    <script src="auth.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const responseElement = document.getElementById('response');
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/users/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, phone, password }),
+                });
+
+                const result = await response.json();
+                responseElement.textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                responseElement.textContent = 'Error: ' + error.message;
+            }
+        });
+    </script>
 </body>
+
 </html>

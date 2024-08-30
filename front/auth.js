@@ -1,66 +1,20 @@
-document.getElementById('register-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const phone = e.target.phone.value;
-    const password = e.target.password.value;
-
-    const response = await fetch('/api/users/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, password })
-    });
+async function fetchUserProfile(userId) {
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+    const user = await response.json();
 
     if (response.ok) {
-        alert('Registration successful!');
-        window.location.href = 'login.html';
+      document.getElementById("user-id").textContent = user._id;
+      document.getElementById("user-name").textContent = user.name;
+      document.getElementById("user-email").textContent = user.email;
+      document.getElementById("user-phone").textContent = user.phone;
     } else {
-        alert('Registration failed!');
+      alert(user.error);
     }
-});
-
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
-    const response = await fetch('/api/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-    });
-
-    if (response.ok) {
-        alert('Login successful!');
-        window.location.href = 'profile.html';
-    } else {
-        alert('Login failed!');
-    }
-});
-
-// Function to handle field editing (name, email)
-function editField(field) {
-    const newValue = prompt(`Enter new ${field}:`);
-    if (newValue) {
-        updateUserProfile(field, newValue);
-    }
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+  }
 }
 
-async function updateUserProfile(field, value) {
-    const userId = document.getElementById('user-id').innerText;
-
-    const response = await fetch(`/api/users/edit/${userId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ [field]: value })
-    });
-
-    if (response.ok) {
-        alert(`${field} updated successfully!`);
-        location.reload();
-    } else {
-        alert(`Failed to update ${field}.`);
-    }
-}
+// Example usage
+// fetchUserProfile("USER_ID_HERE"); // Replace with actual user ID
