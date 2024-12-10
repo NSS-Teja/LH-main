@@ -25,4 +25,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/",async (req,res) => {
+  try {
+    const msg = "I'm the king opf the world";
+    res.json(msg);
+  }
+  catch (err) {
+    res.status(500).json({error: "Error with server connection"});
+  }
+}
+)
+
 module.exports = router;
